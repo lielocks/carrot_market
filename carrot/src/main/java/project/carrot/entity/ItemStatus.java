@@ -1,4 +1,4 @@
-package project.carrot.domain;
+package project.carrot.entity;
 
 public enum ItemStatus {
     ON, APPOINTMENT, OFF

@@ -1,6 +1,5 @@
-package project.carrot.domain;
+package project.carrot.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import project.carrot.global.BaseTime;
 

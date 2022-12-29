@@ -1,4 +1,4 @@
-package project.carrot.domain;
+package project.carrot.entity;
 
 import lombok.*;
 import project.carrot.global.BaseTime;

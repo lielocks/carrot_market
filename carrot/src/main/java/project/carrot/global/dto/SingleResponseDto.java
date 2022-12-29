@@ -1,2 +1,10 @@
-package project.carrot.global.dto;public class SingleResponseDto {
+package project.carrot.global.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
+public class SingleResponseDto<T> {
+    private T data;
 }
