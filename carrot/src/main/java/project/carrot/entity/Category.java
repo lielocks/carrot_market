@@ -1,14 +1,15 @@
 package project.carrot.domain;
 
-import lombok.Getter;
+import lombok.*;
 import project.carrot.global.BaseTime;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category extends BaseTime {
     @Id
     @GeneratedValue
@@ -19,10 +20,6 @@ public class Category extends BaseTime {
     private Article article;
 
     private String cateName;
-
-    public Category() {
-
-    }
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;

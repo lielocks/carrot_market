@@ -1,12 +1,15 @@
 package project.carrot.domain;
 
-import lombok.Getter;
+import lombok.*;
 import project.carrot.global.BaseTime;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookMark extends BaseTime {
 
     @Id @GeneratedValue

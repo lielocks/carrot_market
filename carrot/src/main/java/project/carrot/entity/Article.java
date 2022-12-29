@@ -1,7 +1,6 @@
 package project.carrot.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import project.carrot.global.BaseTime;
 
 import javax.persistence.*;
@@ -11,6 +10,8 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends BaseTime {
 
     @Id @GeneratedValue
@@ -36,23 +37,8 @@ public class Article extends BaseTime {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Category> categoryList = new ArrayList<>();
 
-    public Article() {
-
-    }
     public Article(Long articleId) {
         this.articleId = articleId;
     }
 
-    public Article(Long articleId, ItemStatus status, String title, String content, String place, String picture, String price, Integer likeArticle, Member member, List<Category> categoryList) {
-        this.articleId = articleId;
-        this.status = status;
-        this.title = title;
-        this.content = content;
-        this.place = place;
-        this.picture = picture;
-        this.price = price;
-        this.likeArticle = likeArticle;
-        this.member = member;
-        this.categoryList = categoryList;
-    }
 }
