@@ -22,6 +22,16 @@ public class MemberDto {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class MemberPatchDto {
+        private String nickname;
+        private String pwd;
+        private String phone;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public static class MyPageMemberInfoDto {
         private String nickname;
         private String pic;

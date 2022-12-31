@@ -38,17 +38,17 @@ public class ChatRoom extends BaseTime {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "USER_LIST",
             joinColumns = @JoinColumn(name = "room_id"))
-    List<String> userlist = new ArrayList<>();
+    List<String> userList = new ArrayList<>();
 
-    public enum Onair {
+    public enum onAir {
         ON, OFF;
 
         @Getter
-        private String onair;
+        private String onAir;
     }
 
     @Builder
-    public ChatRoom(String roomId, String title, String pwd) {
+    public ChatRoom(String roomId, String title) {
         this.roomId = roomId;
         this.title = title;
     }

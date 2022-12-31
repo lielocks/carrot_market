@@ -1,11 +1,10 @@
 package project.carrot.entity;
 
 import lombok.*;
+import project.carrot.entity.enums.ItemStatus;
 import project.carrot.global.BaseTime;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -34,8 +33,9 @@ public class Article extends BaseTime {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    private List<Category> categoryList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Article(Long articleId) {
         this.articleId = articleId;

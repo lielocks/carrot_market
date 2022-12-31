@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import project.carrot.dto.member.MemberDto;
 import project.carrot.entity.Member;
 import project.carrot.exception.BusinessLogicException;
 import project.carrot.exception.ExceptionCode;
@@ -27,7 +28,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
-    public Member createMember(Member member) {
+    public MemberDto.Response createMember(Member member) {
 
         //Pwd 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPwd());
@@ -39,7 +40,7 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
 
-        return savedMember;
+        return memberMapper.MemberToMemberSimpleResponse(savedMember.getMemberId());
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)

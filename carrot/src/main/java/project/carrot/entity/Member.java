@@ -5,6 +5,7 @@ import project.carrot.global.BaseTime;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -49,9 +50,7 @@ public class Member extends BaseTime {
     public void setPwd(String password) {
         this.pwd = password;
     }
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
+    public void setRoles(List roles) { this.roles = roles; }
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }

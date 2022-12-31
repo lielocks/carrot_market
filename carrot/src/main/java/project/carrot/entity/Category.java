@@ -1,9 +1,12 @@
 package project.carrot.entity;
 
 import lombok.*;
+import project.carrot.entity.enums.CategoryName;
 import project.carrot.global.BaseTime;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,20 +18,16 @@ public class Category extends BaseTime {
     @GeneratedValue
     private Long categoryId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id")
-    private Article article;
+    @OneToMany(mappedBy = "category")
+    @Builder.Default
+    private List<Article> articleList = new ArrayList<>();
 
-    private String cateName;
+    @Enumerated(EnumType.STRING)
+    private CategoryName categoryName;
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
-
-    public Category(Long categoryId, String cateName) {
-        this.categoryId = categoryId;
-        this.cateName = cateName;
-    }
 
 }
