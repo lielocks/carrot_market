@@ -1,6 +1,5 @@
 package project.carrot.dto.member;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 public class MemberDto {
@@ -11,11 +10,11 @@ public class MemberDto {
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public static class MemberPostDto {
         private String nickname;
-        @JsonProperty("email")
         private String email;
         private String pwd;
         private String phone;
         private String username;
+
     }
 
     @Getter
@@ -44,7 +43,7 @@ public class MemberDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Response {
-        private long memberId;
+        private Long memberId;
         private String email;
         private String phone;
         private String nickname;

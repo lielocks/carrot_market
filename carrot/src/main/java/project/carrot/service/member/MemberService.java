@@ -1,7 +1,6 @@
 package project.carrot.service.member;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,7 +20,6 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
@@ -40,7 +38,7 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
 
-        return memberMapper.MemberToMemberSimpleResponse(savedMember.getMemberId());
+        return memberMapper.MemberToMemberSimpleResponse(savedMember);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
