@@ -50,7 +50,7 @@ public class MemberControllerTest {
     private MemberService memberService;
 
     @Test
-    @DisplayName("멤버가 잘 생성되면 200 OK를 반환한다.")
+    @DisplayName("멤버가 잘 생성되면 201을 반환한다.")
     public void create() throws Exception {
 
         //given
@@ -65,7 +65,7 @@ public class MemberControllerTest {
         member.setMemberId(1L);
 
         given(memberService.createMember(Mockito.any(Member.class)))
-                .willReturn(memberMapper.MemberToMemberSimpleResponse(member));
+                .willReturn(memberMapper.MemberPostDtoToEntity(post));
 
         String content = gson.toJson(post);
 

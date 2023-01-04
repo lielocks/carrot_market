@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -58,19 +59,11 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/*/members").permitAll()
+                                .antMatchers(HttpMethod.POST, "/members/**").permitAll()
                         .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
                         .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
-//                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.POST, "/*/coffees").hasRole("ADMIN")
-//                        .antMatchers(HttpMethod.PATCH, "/*/coffees/**").hasRole("ADMIN")
-//                        .antMatchers(HttpMethod.GET, "/*/coffees/**").hasAnyRole("USER", "ADMIN")
-//                        .antMatchers(HttpMethod.GET, "/*/coffees").permitAll()
-//                        .antMatchers(HttpMethod.DELETE, "/*/coffees").hasRole("ADMIN")
-//                        .antMatchers(HttpMethod.POST, "/*/orders").hasRole("USER")
-//                        .antMatchers(HttpMethod.PATCH, "/*/orders").hasAnyRole("USER", "ADMIN")
-//                        .antMatchers(HttpMethod.GET, "/*/orders/**").hasAnyRole("USER", "ADMIN")
-//                        .antMatchers(HttpMethod.DELETE, "/*/orders").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
                         .anyRequest().permitAll()
                 );
         return http.build();
@@ -78,7 +71,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

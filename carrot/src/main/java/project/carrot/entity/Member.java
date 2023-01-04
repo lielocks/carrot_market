@@ -43,6 +43,11 @@ public class Member extends BaseTime {
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }

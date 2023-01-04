@@ -1,6 +1,8 @@
 package project.carrot.service.member;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -12,11 +14,13 @@ import project.carrot.exception.BusinessLogicException;
 import project.carrot.exception.ExceptionCode;
 import project.carrot.mapper.MemberMapper;
 import project.carrot.repository.member.MemberRepository;
+import project.carrot.security.event.MemberRegistrationApplicationEvent;
 import project.carrot.security.utils.CustomAuthorityUtils;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -26,19 +30,41 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
-    public MemberDto.Response createMember(Member member) {
+    private final ApplicationEventPublisher publisher;
 
-        //Pwd 암호화
+    @Transactional
+    public Member createMember(Member member) {
+
+        verifyExistsEmail(member.getEmail());
+
+        // 추가: Password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPwd());
         member.setPwd(encryptedPassword);
 
-        //DB에 member role 저장
+        // 추가: DB에 User Role 저장
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
 
-        return memberMapper.MemberToMemberSimpleResponse(savedMember);
+
+        publisher.publishEvent(new MemberRegistrationApplicationEvent(savedMember));
+        return savedMember;
+//        //Pwd 암호화
+//        String encryptedPassword = passwordEncoder.encode(member.getPwd());
+//        member.setPwd(encryptedPassword);
+//
+//        //DB에 member role 저장
+//        List<String> roles = authorityUtils.createRoles(member.getEmail());
+//        member.setRoles(roles);
+//
+//        log.info("createMember logging {}", member);
+//
+//        Member savedMember = memberRepository.save(member);
+//
+//        log.info("savedMember logging {}", savedMember);
+//
+//        return memberMapper.MemberToMemberSimpleResponse(savedMember);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)

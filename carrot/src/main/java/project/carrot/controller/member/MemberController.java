@@ -1,6 +1,7 @@
 package project.carrot.controller.member;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +14,7 @@ import project.carrot.service.member.MemberService;
 
 import javax.validation.Valid;
 
+@Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +27,12 @@ public class MemberController {
     @PostMapping
     public ResponseEntity postMember(@RequestBody @Valid MemberDto.MemberPostDto memberPostDto) {
 
+        log.info("memberController print {}", memberPostDto);
         Member member = memberMapper.MemberPostDtoToEntity(memberPostDto);
-        MemberDto.Response response = memberService.createMember(member);
+        log.info("memberController member print {}", member);
+        Member serviceMember = memberService.createMember(member);
 
+        MemberDto.Response response = memberMapper.MemberToMemberSimpleResponse(serviceMember);
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
 
@@ -40,4 +45,7 @@ public class MemberController {
 
         return new ResponseEntity<>(new SingleResponseDto<>(updateMember), HttpStatus.OK);
     }
+
+//    @GetMapping
+//    public ResponseEntity getMember(@RequestBody )
 }
